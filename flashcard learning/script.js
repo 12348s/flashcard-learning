@@ -41,13 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCategories() {
         const categories = [...new Set(flashcards.map(card => card.category))];
         
-        // Update category filter
+        
         categoryFilter.innerHTML = '<option value="All">All Categories</option>';
         categories.forEach(category => {
             categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
         });
         
-        // Update test mode category select
+        
         testCategorySelect.innerHTML = '<option value="All">All Categories</option>';
         categories.forEach(category => {
             testCategorySelect.innerHTML += `<option value="${category}">${category}</option>`;
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         accuracyText.textContent = totalCards ? `${Math.round((reviewedCards / totalCards) * 100)}%` : "0%";
     }
 
-    // Search functionality
+    
     window.searchFlashcards = () => {
         const searchTerm = document.getElementById("searchFlashcards").value.toLowerCase();
         flashcardContainer.innerHTML = "";
@@ -170,16 +170,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Test Mode functions
+    
     window.startTestMode = () => {
         const selectedCategory = testCategorySelect.value;
         
-        // Filter cards by selected category
+        
         testCards = selectedCategory === "All" 
             ? [...flashcards]
             : flashcards.filter(card => card.category === selectedCategory);
         
-        // Shuffle the test cards
+        
         testCards = testCards.sort(() => Math.random() - 0.5);
         
         if (testCards.length === 0) {
@@ -187,11 +187,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         
-        // Reset test state
+        
         currentTestIndex = 0;
         testCorrectCount = 0;
         
-        // Update UI
+       
         document.getElementById("testQuestion").textContent = testCards[0].question;
         document.getElementById("testAnswer").textContent = testCards[0].answer;
         document.getElementById("answerSection").style.display = "none";
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("testCounter").textContent = `1/${testCards.length}`;
         document.getElementById("testProgress").style.width = `${(1/testCards.length) * 100}%`;
         
-        // Show modal
+        
         testModeModal.show();
     };
 
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.recordTestResult = (isCorrect) => {
-        // Record the result
+        
         if (isCorrect) {
             testCorrectCount++;
             document.getElementById("testCard").classList.add("test-result-correct");
@@ -220,23 +220,23 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("testCard").classList.add("test-result-incorrect");
         }
         
-        // Move to next card after a brief delay
+        
         setTimeout(() => {
             document.getElementById("testCard").classList.remove("test-result-correct", "test-result-incorrect");
             currentTestIndex++;
             
-            // Check if we're done with all cards
+            
             if (currentTestIndex >= testCards.length) {
                 finishTest();
             } else {
-                // Setup next question
+                
                 document.getElementById("testQuestion").textContent = testCards[currentTestIndex].question;
                 document.getElementById("testAnswer").textContent = testCards[currentTestIndex].answer;
                 document.getElementById("answerSection").style.display = "none";
                 document.getElementById("showAnswerBtn").style.display = "block";
                 document.getElementById("feedbackBtns").style.display = "none";
                 
-                // Update progress
+               
                 document.getElementById("testCounter").textContent = `${currentTestIndex + 1}/${testCards.length}`;
                 document.getElementById("testProgress").style.width = `${((currentTestIndex + 1)/testCards.length) * 100}%`;
             }
@@ -246,20 +246,20 @@ document.addEventListener("DOMContentLoaded", () => {
     function finishTest() {
         const score = Math.round((testCorrectCount / testCards.length) * 100);
         
-        // Hide test controls
+        
         document.getElementById("testQuestion").textContent = "Test Complete!";
         document.getElementById("answerSection").style.display = "none";
         document.getElementById("showAnswerBtn").style.display = "none";
         document.getElementById("feedbackBtns").style.display = "none";
         
-        // Show results
+        
         document.getElementById("testResults").style.display = "block";
         document.getElementById("testScore").textContent = `${score}%`;
         document.getElementById("correctAnswers").textContent = testCorrectCount;
         document.getElementById("totalQuestions").textContent = testCards.length;
     }
     function setupImportExport() {
-        // Add UI elements to the sidebar
+        
         const sidebarEl = document.querySelector('.col-md-3');
         const importExportSection = document.createElement('div');
         importExportSection.innerHTML = `
@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         sidebarEl.appendChild(importExportSection);
         
-        // Setup event listeners
+        
         document.getElementById('exportBtn').addEventListener('click', exportFlashcards);
         document.getElementById('importBtn').addEventListener('click', () => {
             document.getElementById('importFile').click();
@@ -292,10 +292,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dataStr = JSON.stringify(flashcards, null, 2);
             filename = 'flashcards.json';
         } else {
-            // CSV format
+            
             const csvHeader = 'question,answer,category,reviewed,bookmarked\n';
             const csvRows = flashcards.map(card => {
-                // Escape commas and quotes in the content
+                
                 const q = `"${card.question.replace(/"/g, '""')}"`;
                 const a = `"${card.answer.replace(/"/g, '""')}"`;
                 const c = `"${card.category.replace(/"/g, '""')}"`;
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (file.name.endsWith('.json')) {
                     const imported = JSON.parse(content);
                     if (Array.isArray(imported)) {
-                        // Create confirmation dialog
+                        
                         if (confirm(`Import ${imported.length} flashcards? This will replace your current collection.`)) {
                             flashcards = imported;
                             saveFlashcards();
@@ -344,11 +344,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     if (header.includes('question') && header.includes('answer')) {
                         const importedCards = [];
-                        // Skip header row
+                        
                         for (let i = 1; i < rows.length; i++) {
                             if (!rows[i].trim()) continue;
                             
-                            // Handle CSV parsing with possible quoted fields containing commas
+                            
                             let inQuote = false;
                             let currentValue = '';
                             let values = [];
@@ -366,10 +366,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 }
                             }
                             
-                            // Add the last value
+                            
                             values.push(currentValue);
                             
-                            // Remove quotes from fields
+                            
                             values = values.map(v => v.replace(/^"(.*)"$/, '$1').replace(/""/g, '"'));
                             
                             importedCards.push({
@@ -404,18 +404,18 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         
         reader.readAsText(file);
-        // Reset the file input so the same file can be imported again if needed
+        
         event.target.value = '';
     };
 
-    // Timed Mode Variables
+    
     let timerInterval;
     let timeLeft;
     let timedModeEnabled = false;
-    let defaultTimeLimit = 30; // 30 seconds default
+    let defaultTimeLimit = 30; 
 
     function setupTimedMode() {
-        // Add UI elements to the Test Mode section
+        
         const testModeSection = document.querySelector('.col-md-3 h5:nth-of-type(2)').parentNode;
         const timedModeControls = document.createElement('div');
         timedModeControls.innerHTML = `
@@ -433,17 +433,17 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
         
-        // Insert before the Start Test button
+        
         const startTestBtn = testModeSection.querySelector('.btn-success');
         testModeSection.insertBefore(timedModeControls, startTestBtn);
         
-        // Setup event listener for checkbox
+        
         document.getElementById('enableTimedMode').addEventListener('change', function() {
             timedModeEnabled = this.checked;
             document.getElementById('timedModeOptions').style.display = timedModeEnabled ? 'block' : 'none';
         });
         
-        // Modify the test modal to include timer UI
+        
         const testCard = document.getElementById('testCard');
         const timerElement = document.createElement('div');
         timerElement.id = 'timer';
@@ -458,12 +458,12 @@ document.addEventListener("DOMContentLoaded", () => {
         testCard.parentNode.insertBefore(timerElement, testCard.nextSibling);
     }
 
-    // Modify startTestMode function to handle timed mode
+    
     const originalStartTestMode = window.startTestMode;
     window.startTestMode = function() {
         originalStartTestMode();
         
-        // Setup timer if enabled
+        
         if (timedModeEnabled) {
             const timerElement = document.getElementById('timer');
             timerElement.style.display = 'block';
@@ -475,38 +475,38 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     function startTimer() {
-        // Clear any existing timer
+        
         clearInterval(timerInterval);
         
-        // Get time limit from input
+        
         timeLeft = parseInt(document.getElementById('timeLimit').value) || defaultTimeLimit;
         if (timeLeft < 5) timeLeft = 5;
         if (timeLeft > 120) timeLeft = 120;
         
-        // Update timer display
+        
         const timerText = document.getElementById('timerText');
         const timerBar = document.getElementById('timerBar');
         timerText.textContent = timeLeft;
         timerBar.style.width = '100%';
         timerBar.className = 'progress-bar bg-info';
         
-        // Start countdown
+      
         timerInterval = setInterval(() => {
             timeLeft--;
             timerText.textContent = timeLeft;
             
-            // Update progress bar
+   
             const percentage = (timeLeft / parseInt(document.getElementById('timeLimit').value)) * 100;
             timerBar.style.width = `${percentage}%`;
             
-            // Change color as time runs low
+            
             if (timeLeft <= 5) {
                 timerBar.className = 'progress-bar bg-danger';
             } else if (timeLeft <= 10) {
                 timerBar.className = 'progress-bar bg-warning';
             }
             
-            // Time's up
+            
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 timeExpired();
@@ -515,31 +515,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function timeExpired() {
-        // Automatically show the answer and mark it as wrong
+        
         document.getElementById('answerSection').style.display = 'block';
         document.getElementById('showAnswerBtn').style.display = 'none';
         document.getElementById('feedbackBtns').style.display = 'block';
         document.getElementById('testCard').classList.add('test-result-incorrect');
         
-        // Notify user
+        
         alert('Time expired!');
         
-        // Allow a moment for the user to see the answer
+        
         setTimeout(() => {
             recordTestResult(false);
         }, 2000);
     }
 
-    // Modify recordTestResult to reset timer for next question
+    
     const originalRecordTestResult = window.recordTestResult;
     window.recordTestResult = function(isCorrect) {
-        // Clear the timer
+        
         clearInterval(timerInterval);
         
-        // Call the original function
+       
         originalRecordTestResult(isCorrect);
         
-        // If there are more questions and timed mode is enabled, restart the timer
+        
         if (currentTestIndex < testCards.length - 1 && timedModeEnabled) {
             setTimeout(() => {
                 startTimer();
