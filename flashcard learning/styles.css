@@ -1,0 +1,291 @@
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Navbar styling */
+.navbar {
+    box-shadow: 0 2px 10px rgba(106, 13, 173, 0.2);
+}
+
+.bg-purple {
+    background-color: #6a0dad;
+    background-image: linear-gradient(135deg, #6a0dad, #8a2be2);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 1.5rem;
+}
+
+/* Button styling */
+.btn-purple {
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(106, 13, 173, 0.3);
+}
+
+.btn-purple:hover {
+    background-color: #580ba0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(106, 13, 173, 0.4);
+}
+
+.btn-light {
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Card container and sidebar styling */
+.container {
+    max-width: 1200px;
+}
+
+select.form-control, input.form-control {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+select.form-control:focus, input.form-control:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.25);
+}
+
+h5 {
+    margin-top: 1.5rem;
+    font-weight: 600;
+    color: #444;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+/* Alert styling */
+.alert-info {
+    background-color: #f0ebf8;
+    border-left: 4px solid #6a0dad;
+    border-radius: 6px;
+    color: #333;
+}
+
+/* Flashcard styling */
+.flashcard {
+    width: 250px;
+    height: 180px;
+    perspective: 1000px;
+    cursor: pointer;
+    margin: 15px;
+    transition: transform 0.2s ease;
+}
+
+.flashcard:hover {
+    transform: translateY(-5px);
+}
+
+.flashcard-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.flashcard.flip .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.flashcard-front {
+    border-left: 5px solid #6a0dad;
+}
+
+.flashcard-back {
+    background-color: #6a0dad;
+    background-image: linear-gradient(135deg, #6a0dad, #8a2be2);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.flashcard-back button {
+    margin-top: 10px;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.flashcard-back button:hover {
+    opacity: 1;
+}
+
+.bookmarked {
+    position: relative;
+}
+
+.bookmarked:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    background-color: gold;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    z-index: 10;
+}
+
+/* Dark mode styling */
+.dark-mode {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+.dark-mode .alert-info {
+    background-color: #292941;
+    border-left: 4px solid #8a2be2;
+    color: #f0f0f0;
+}
+
+.dark-mode h5 {
+    color: #e0e0e0;
+    border-bottom-color: #333;
+}
+
+.dark-mode .flashcard-front {
+    background-color: #252540;
+    color: white;
+    border-left: 5px solid #8a2be2;
+}
+
+.dark-mode .flashcard-back {
+    background-color: #6a0dad;
+    background-image: linear-gradient(135deg, #6a0dad, #9b59b6);
+}
+
+.dark-mode select.form-control, 
+.dark-mode input.form-control {
+    background-color: #252540;
+    border-color: #444;
+    color: white;
+}
+
+.dark-mode select.form-control:focus, 
+.dark-mode input.form-control:focus {
+    border-color: #8a2be2;
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.25);
+}
+
+/* Test mode styling */
+#testCard {
+    min-height: 200px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #6a0dad;
+    transition: all 0.3s ease;
+}
+
+.dark-mode #testCard {
+    background-color: #252540;
+    color: white;
+    border-left: 5px solid #8a2be2;
+}
+
+.test-result-correct {
+    background-color: rgba(40, 167, 69, 0.1) !important;
+    border-left: 5px solid #28a745 !important;
+}
+
+.test-result-incorrect {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border-left: 5px solid #dc3545 !important;
+}
+
+.dark-mode .test-result-correct {
+    background-color: rgba(40, 167, 69, 0.2) !important;
+}
+
+.dark-mode .test-result-incorrect {
+    background-color: rgba(220, 53, 69, 0.2) !important;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+.progress-bar.bg-purple {
+    background-image: linear-gradient(to right, #6a0dad, #8a2be2);
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #6a0dad;
+    background-image: linear-gradient(135deg, #6a0dad, #8a2be2);
+    color: white;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.btn-close {
+    color: white;
+    filter: brightness(0) invert(1);
+}
+
+.dark-mode .modal-content {
+    background-color: #252540;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .flashcard {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    .col-md-4.flashcard-wrapper {
+        padding: 0 10px;
+    }
+}
